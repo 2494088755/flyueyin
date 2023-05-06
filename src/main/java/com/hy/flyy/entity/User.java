@@ -1,8 +1,6 @@
 package com.hy.flyy.entity;
 
-import com.baomidou.mybatisplus.annotation.FieldFill;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableLogic;
+import com.baomidou.mybatisplus.annotation.*;
 import com.sun.istack.internal.NotNull;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -29,6 +27,7 @@ public class User implements Serializable {
     private static final long serialVersionUID = -1245840966479021865L;
 
     @ApiModelProperty("唯一标识")
+    @TableId(type = IdType.AUTO)
     private Integer id;
 
     @ApiModelProperty("用户名")

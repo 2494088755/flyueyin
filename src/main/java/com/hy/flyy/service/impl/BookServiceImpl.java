@@ -5,16 +5,15 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.hy.flyy.dto.BookDto;
-import com.hy.flyy.dto.UserDto;
 import com.hy.flyy.entity.Book;
-import com.hy.flyy.entity.User;
 import com.hy.flyy.mapper.BookMapper;
 import com.hy.flyy.service.BookService;
 import com.hy.flyy.utils.R;
+import com.hy.flyy.utils.RedisUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
@@ -27,6 +26,9 @@ import java.util.Objects;
 @Service("bookService")
 @Slf4j
 public class BookServiceImpl extends ServiceImpl<BookMapper, Book> implements BookService {
+
+    @Autowired
+    private RedisUtils redisUtils;
 
     @Override
     public R addBook(Book book) {
@@ -46,6 +48,14 @@ public class BookServiceImpl extends ServiceImpl<BookMapper, Book> implements Bo
             return R.fail("库存有误");
         }
 
+        String image = redisUtils.getCacheObject("image");
+        if (image == null) {
+            return R.fail("请上传图片");
+        }
+
+        book.setImage(image);
+        redisUtils.deleteObject("image");
+
         return R.success(save(book));
     }
 
@@ -62,7 +72,7 @@ public class BookServiceImpl extends ServiceImpl<BookMapper, Book> implements Bo
             queryWrapper.like(Book::getAuthor, bookDto.getAuthor());
         }
 
-        if (bookDto.getCategoryId()!=null) {
+        if (bookDto.getCategoryId() != null) {
             queryWrapper.eq(Book::getCategoryId, bookDto.getCategoryId());
         }
 
@@ -95,7 +105,7 @@ public class BookServiceImpl extends ServiceImpl<BookMapper, Book> implements Bo
             queryWrapper.like(Book::getAuthor, book.getAuthor());
         }
 
-        if (book.getCategoryId()!=null) {
+        if (book.getCategoryId() != null) {
             queryWrapper.eq(Book::getCategoryId, book.getCategoryId());
         }
 
@@ -115,6 +125,8 @@ public class BookServiceImpl extends ServiceImpl<BookMapper, Book> implements Bo
 
         return R.success(book);
     }
+
+
 
 }
 

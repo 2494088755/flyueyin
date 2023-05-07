@@ -1,5 +1,6 @@
 package com.hy.flyy.controller;
 
+import com.hy.flyy.config.UploadConfig;
 import com.hy.flyy.dto.BookDto;
 import com.hy.flyy.dto.UserDto;
 import com.hy.flyy.entity.Book;
@@ -10,9 +11,18 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 /**
@@ -27,6 +37,9 @@ import java.util.List;
 public class BookController {
 
     private BookService bookService;
+
+    @Autowired
+    private UploadConfig uploadConfig;
 
     @Autowired
     public void setBookService(BookService bookService) {
@@ -61,6 +74,16 @@ public class BookController {
     @ApiOperation("查询单本书")
     public R findOneBook(@PathVariable Integer id) {
         return bookService.findOneBook(id);
+    }
+
+    @GetMapping("/image/{filename:.+}")
+    public void getImage(@PathVariable String filename, HttpServletResponse response) throws IOException {
+        Path imagePath = Paths.get(uploadConfig.getDir() + filename);
+        Resource imageResource = new UrlResource(imagePath.toUri());
+        response.setContentType(MediaType.IMAGE_JPEG_VALUE);
+        InputStream inputStream = imageResource.getInputStream();
+        IOUtils.copy(inputStream, response.getOutputStream());
+        response.flushBuffer();
     }
 
 }

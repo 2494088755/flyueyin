@@ -26,8 +26,12 @@ import java.util.List;
 @CrossOrigin
 public class BookController {
 
-    @Autowired
     private BookService bookService;
+
+    @Autowired
+    public void setBookService(BookService bookService) {
+        this.bookService = bookService;
+    }
 
     @ApiOperation("添加书本")
     @PostMapping
@@ -51,6 +55,12 @@ public class BookController {
     @ApiOperation("修改书本信息")
     public R update(@RequestBody Book book) {
         return bookService.update(book);
+    }
+
+    @GetMapping("/{id}")
+    @ApiOperation("查询单本书")
+    public R findOneBook(@PathVariable Integer id) {
+        return bookService.findOneBook(id);
     }
 
 }

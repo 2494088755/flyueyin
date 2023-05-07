@@ -30,7 +30,6 @@ mybatis-plus:
   #配置日志
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-  #    map-underscore-to-camel-case: true
   #配置逻辑删除
   global-config:
     db-config:

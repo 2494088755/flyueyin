@@ -102,5 +102,19 @@ public class BookServiceImpl extends ServiceImpl<BookMapper, Book> implements Bo
         return R.success(updateById(book));
     }
 
+    @Override
+    public R findOneBook(Integer id) {
+        LambdaQueryWrapper<Book> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(Book::getId, id);
+
+        Book book = getOne(queryWrapper);
+
+        if (book == null) {
+            return R.fail("没有找到");
+        }
+
+        return R.success(book);
+    }
+
 }
 

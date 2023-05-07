@@ -22,5 +22,7 @@ public interface BookService extends IService<Book> {
     R delete(List<Book> ids);
 
     R update(Book book);
+
+    R findOneBook(Integer id);
 }
 

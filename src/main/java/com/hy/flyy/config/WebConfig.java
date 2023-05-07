@@ -38,6 +38,7 @@ public class WebConfig implements WebMvcConfigurer {
                 , "/"
                 , "/user/register"
                 , "/user/captcha"
+                , "/book/**"
         );
     }
 

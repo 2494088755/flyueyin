@@ -42,7 +42,8 @@ public class FileController {
         }
 
 //         获取原始文件名
-        String filename = file.getOriginalFilename()+UUID.randomUUID();
+        String filename = UUID.randomUUID()+file.getOriginalFilename();
+        System.out.println(filename);
 
         if (!new File(uploadConfig.getDir()).exists()) {
             new File(uploadConfig.getDir()).mkdirs();
@@ -50,7 +51,7 @@ public class FileController {
 
         // 创建文件存储路径
         Path uploadPath = Paths.get(uploadConfig.getDir(), filename);
-        redisUtils.setCacheObject("image", uploadPath.getFileName());
+        redisUtils.setCacheObject("image", filename);
 
         // 将上传的图片存储到服务器指定路径
         Files.copy(file.getInputStream(), uploadPath);

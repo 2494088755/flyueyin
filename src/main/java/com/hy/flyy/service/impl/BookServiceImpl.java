@@ -109,6 +109,14 @@ public class BookServiceImpl extends ServiceImpl<BookMapper, Book> implements Bo
             queryWrapper.eq(Book::getCategoryId, book.getCategoryId());
         }
 
+        String image = redisUtils.getCacheObject("image");
+        if (image == null) {
+            return R.fail("请上传图片");
+        }
+
+        book.setImage(image);
+        redisUtils.deleteObject("image");
+
         return R.success(updateById(book));
     }
 

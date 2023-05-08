@@ -77,8 +77,11 @@ public class BookController {
     }
 
     @GetMapping("/image/{filename:.+}")
+    @ApiOperation("查询单本书封面图片url")
     public void getImage(@PathVariable String filename, HttpServletResponse response) throws IOException {
+        //获取图片的绝对路径
         Path imagePath = Paths.get(uploadConfig.getDir() + filename);
+
         Resource imageResource = new UrlResource(imagePath.toUri());
         response.setContentType(MediaType.IMAGE_JPEG_VALUE);
         InputStream inputStream = imageResource.getInputStream();

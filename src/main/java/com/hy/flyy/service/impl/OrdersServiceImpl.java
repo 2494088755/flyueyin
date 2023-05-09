@@ -18,7 +18,7 @@ public class OrdersServiceImpl extends ServiceImpl<OrdersMapper, Orders> impleme
 
     @Override
     public R findAll() {
-        return null;
+        return R.success(this.list());
     }
 
     @Override

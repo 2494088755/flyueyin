@@ -146,8 +146,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         LambdaQueryWrapper<User> lambdaQueryWrapper = new LambdaQueryWrapper<>();
         lambdaQueryWrapper.eq(User::getUsername, username);
         User queryUser = getOne(lambdaQueryWrapper);
+
         if (queryUser != null) {
             log.info("查询到用户{}", queryUser.getUsername());
+            queryUser.setSalt(null);
+            queryUser.setPassword(null);
             return R.success(queryUser);
         }
 

@@ -20,31 +20,26 @@ public class OrdersController {
     @Autowired
     private OrdersService ordersService;
 
-    // 获取所有订单
     @GetMapping
     public R getAllOrders() {
         return ordersService.findAll();
     }
 
-    // 创建订单
     @PostMapping
     public R createOrder(@RequestBody Orders orders) {
-        return R.success(ordersService.save(orders) ? "添加成功" : "添加失败");
+        return ordersService.add(orders);
     }
 
-    // 获取指定订单
     @GetMapping("/{id}")
     public R getOrderById(@PathVariable Integer id) {
         return ordersService.findById(id);
     }
 
-    // 更新订单
     @PutMapping
     public R updateOrder(@RequestBody Orders orders) {
        return ordersService.updateOrder(orders);
     }
 
-    // 删除订单
     @DeleteMapping("/{id}")
     public R deleteOrder(@PathVariable Integer id) {
         return ordersService.deleteOrder(id);

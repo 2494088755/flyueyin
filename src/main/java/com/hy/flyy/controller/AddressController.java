@@ -42,4 +42,9 @@ public class AddressController {
     public R<?> deleteOne(@PathVariable Integer id) {
         return addressService.deleteById(id);
     }
+
+    @GetMapping("/{userId}")
+    public R<?> findOneAddByUserId(@PathVariable Integer userId) {
+        return addressService.findOne(userId);
+    }
 }

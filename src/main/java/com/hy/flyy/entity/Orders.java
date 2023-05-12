@@ -33,13 +33,15 @@ public class Orders implements Serializable {
 
     private LocalDateTime deliveryTime;
 
-    private String shippingAddress;
+    private String addressId;
 
     private String paymentMethod;
 
     private String paymentStatus;
 
     private String shippingStatus;
+
+    private Integer quantity;
 
 }
 

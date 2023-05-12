@@ -19,5 +19,7 @@ public interface OrdersService extends IService<Orders> {
     R updateOrder(Orders orders);
 
     R deleteOrder(Integer id);
+
+    R add(Orders orders);
 }
 

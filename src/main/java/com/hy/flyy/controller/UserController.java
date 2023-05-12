@@ -50,7 +50,7 @@ public class UserController {
     }
 
     @GetMapping("/{username}")
-    @ApiOperation("根据id查询用户")
+    @ApiOperation("根据用户名查询用户")
     public R findUser(@PathVariable @ApiParam("要查询用户的id") String username) {
         return userService.findOne(username);
     }

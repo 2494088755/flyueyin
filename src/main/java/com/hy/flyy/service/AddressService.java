@@ -16,4 +16,6 @@ public interface AddressService extends IService<Address> {
     R<?> deleteById(Integer id);
 
     R<?> updateOne(Address address);
+
+    R<?> findOne(Integer userId);
 }

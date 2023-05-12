@@ -7,6 +7,8 @@ import com.hy.flyy.service.OrdersService;
 import com.hy.flyy.utils.R;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+
 /**
  * (Order)表服务实现类
  *
@@ -34,6 +36,15 @@ public class OrdersServiceImpl extends ServiceImpl<OrdersMapper, Orders> impleme
     @Override
     public R deleteOrder(Integer id) {
         return null;
+    }
+
+    @Override
+    public R add(Orders orders) {
+        System.out.println(orders);
+        orders.setOrderTime(LocalDateTime.now());
+        orders.setPaymentStatus("0");
+        save(orders);
+        return R.success();
     }
 }
 
